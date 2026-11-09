@@ -2,13 +2,16 @@ mod wallpaper_struct;
 use wallpaper_struct::Wallpaper;
 mod keybind_bar;
 mod style;
+mod popup;
 use crate::keybind_bar::create_keybind_bar;
+use crate::popup::gen_popup;
 //use ratatui::Frame;
 use ratatui::crossterm::event;
 use ratatui::layout::{Constraint, Layout};
 use ratatui::widgets::Block;
 fn main() -> std::io::Result<()>{
 	Wallpaper::load();
+	let mut show_popup: bool = false;
 	ratatui::run(|terminal| {
 		loop{
 			terminal.draw(|frame| {
@@ -23,11 +26,15 @@ fn main() -> std::io::Result<()>{
 				);
 				frame.render_widget(Block::new().title("Top"), top); // TODO display keybinds
 				frame.render_widget(Block::new().title("Main"), main); // TODO display wallpapers
-				frame.render_widget(create_keybind_bar(), names); // TODO handle in another file			
+				frame.render_widget(create_keybind_bar(), names);
+				if show_popup {
+					 gen_popup(frame, "Test".to_string(), "Hi".to_string());
+					 show_popup=false;
+				}
 			});
-			// TODO add borders with custom style
 			if let Some(key_event) = event::read()?.as_key_press_event() { //should only refresh when something is pressed
 			    match key_event.code {
+			        event::KeyCode::Char('p') => show_popup=true,
 			        event::KeyCode::Char('q') => return Ok(()),
 			        // TODO add + for a popup that asks you to add a path to available
 			        // TODO maybe make it so that this and the keybind bar get the keys from the same source so that they are the same

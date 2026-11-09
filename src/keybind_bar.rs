@@ -13,3 +13,5 @@ pub fn create_keybind_bar() -> ratatui::widgets::Paragraph<'static>{
 	]);
 	Paragraph::new(line).block(block).wrap(Wrap { trim: false })
 }
+// TODO handle the rendering in the function, maybe make decoration directly instead of with borders
+// TODO add theming 
