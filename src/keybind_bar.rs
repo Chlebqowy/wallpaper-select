@@ -1,8 +1,10 @@
 use ratatui::widgets::{Block, Paragraph, Wrap};
 use ratatui::symbols::merge::MergeStrategy;
 use ratatui::prelude::{Style, Line, Span};
+use ratatui::Frame;
+use ratatui::layout::Rect;
 use crate::style::BORDER_SET;
-pub fn create_keybind_bar() -> ratatui::widgets::Paragraph<'static>{
+pub fn create_keybind_bar(frame: &mut Frame, names: Rect){
 	let block = Block::bordered()
 		.border_set(BORDER_SET)
 		.merge_borders(MergeStrategy::Replace);
@@ -11,7 +13,7 @@ pub fn create_keybind_bar() -> ratatui::widgets::Paragraph<'static>{
 	        Span::styled("-", Style::new().white()),
 	        Span::styled("quit", Style::new().blue()),
 	]);
-	Paragraph::new(line).block(block).wrap(Wrap { trim: false })
+	let paragraph = Paragraph::new(line).block(block).wrap(Wrap { trim: false });
+	frame.render_widget(paragraph, names);
 }
-// TODO handle the rendering in the function, maybe make decoration directly instead of with borders
 // TODO add theming 

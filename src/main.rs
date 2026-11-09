@@ -26,7 +26,8 @@ fn main() -> std::io::Result<()>{
 				);
 				frame.render_widget(Block::new().title("Top"), top); // TODO display keybinds
 				frame.render_widget(Block::new().title("Main"), main); // TODO display wallpapers
-				frame.render_widget(create_keybind_bar(), names);
+				create_keybind_bar(frame, names);
+				
 				if show_popup {
 					 gen_popup(frame, "Test".to_string(), "Hi".to_string());
 					 show_popup=false;
@@ -46,3 +47,4 @@ fn main() -> std::io::Result<()>{
 		}
 	})
 }
+// TODO also add an option for making themes and a better installer app
