@@ -10,6 +10,6 @@ install:
 	sudo mkdir -pv $(DESTDIR)/usr/share/chlebqowy-wallpaper-select
 	sudo install -m 0644 default.png $(DESTDIR)/usr/share/chlebqowy-wallpaper-select/default.png
 	sudo mkdir -pv $(DESTDIR)/usr/share/licenses
-	sudo mkdir -pv $(DESTDIR)/usr/share/licenses/clebqowy-wallpaper-select
+	sudo mkdir -pv $(DESTDIR)/usr/share/licenses/chlebqowy-wallpaper-select
 	sudo install -m 0644 LICENSE $(DESTDIR)/usr/share/licenses/chlebqowy-wallpaper-select/LICENSE
 		
