@@ -20,7 +20,7 @@ impl Wallpaper {
 		}; 
 		return default;
 	}
-	fn create_json(_err: std::io::Error) -> String {
+	fn create_json() -> String {
 		let default: Wallpaper = Self::gen_default();
 		//println!("2");
 		let wallpaper_json: String = serde_json::to_string(&default).unwrap();
@@ -31,10 +31,13 @@ impl Wallpaper {
 	}
 	pub fn load() -> Wallpaper {
 		let wallpaper_file = std::fs::read_to_string("wallpaper.json");
+		let contents = match wallpaper_file {
+		        Ok(contents) => contents,
+		        Err(err) if err.kind() == std::io::ErrorKind::NotFound => Self::create_json(),
+		        Err(err) => panic!("{}", err), // TODO display an error message
+		};
 		//println!("1");
-		let wallpaper: Wallpaper = serde_json::from_str(
-			&wallpaper_file.unwrap_or_else(Self::create_json)
-		).unwrap(); // TODO make it display an error message when that's implemented	
+		let wallpaper: Wallpaper = serde_json::from_str(&contents).unwrap(); // TODO make it display an error message when that's implemented	
 		//println!("3");
 		return wallpaper;
 	}
